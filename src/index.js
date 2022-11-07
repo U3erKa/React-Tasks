@@ -27,7 +27,7 @@ root.render(
       price={7000}
       amount={0}
     />
-    {/* @ts-expect-error */}
+    {/* @ts-ignore */}
     <Goods />
   </React.StrictMode>
 );
