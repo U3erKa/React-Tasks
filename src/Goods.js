@@ -1,9 +1,6 @@
 // @ts-check
 'use strict';
 import React from 'react';
-// import ReactDOM from 'react-dom/client';
-// import logo from './logo.svg';
-// import './App.css';
 import PropTypes from 'prop-types';
 
 /**
