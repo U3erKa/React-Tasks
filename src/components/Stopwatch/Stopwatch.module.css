@@ -14,7 +14,7 @@
   padding: 5px 10px;
   font-size: 24px;
   font-weight: bold;
-  grid-area: 1 / 1 / 2 / 5;
+  grid-area: 1 / 1 / 2 / 7;
 }
 
 .btn {
@@ -39,8 +39,14 @@
   background-color: lightseagreen;
 }
 
+.lapBtn {
+  border-color: red;
+  background-color: darkcyan;
+  grid-area: 2 / 3 / 2 / 5;
+}
+
 .stopBtn {
   border-color: orangered;
   background-color: cyan;
-  grid-area: 2 / 3 / 2 / 5;
+  grid-area: 2 / 5 / 2 / 7;
 }
