@@ -28,6 +28,7 @@
         "semi": [
             "warn",
             "always"
-        ]
+        ],
+        "react/react-in-jsx-scope": "off"
     }
 }
