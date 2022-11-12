@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import styles from './Stopwatch.module.css';
 
 class Stopwatch extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      time: 0,
+      seconds: 0,
       isStarted: false,
     };
   }
@@ -12,7 +13,7 @@ class Stopwatch extends Component {
   startTimer = () => {
     this.setState({ isStarted: true });
     this.intervalId = setInterval(() => {
-      this.setState({ time: this.state.time + 1 });
+      this.setState({ seconds: this.state.seconds + 1 });
     }, 1000);
   };
   pauseTimer = () => {
@@ -21,21 +22,27 @@ class Stopwatch extends Component {
   };
   stopTimer = () => {
     this.pauseTimer();
-    this.setState({ time: 0 });
+    this.setState({ seconds: 0 });
   };
 
   componentDidMount() {}
 
   render() {
-    const { time, isStarted } = this.state;
+    const { seconds, isStarted } = this.state;
+    const { container, time, btn, startBtn, pauseBtn, stopBtn } = styles;
 
     return (
-      <article>
-        <p>Time: {time}</p>
-        <button className={isStarted ? 'pauseBtn' : 'startBtn'} onClick={isStarted ? this.pauseTimer : this.startTimer}>
+      <article className={container}>
+        <p className={time}>Time: {seconds}</p>
+        <button
+          className={`${isStarted ? pauseBtn : startBtn} ${btn}`}
+          onClick={isStarted ? this.pauseTimer : this.startTimer}
+        >
           {isStarted ? 'Pause' : 'Start'}
         </button>
-        <button onClick={this.stopTimer}>Stop</button>
+        <button className={`${stopBtn} ${btn}`} onClick={this.stopTimer}>
+          Stop
+        </button>
       </article>
     );
   }
