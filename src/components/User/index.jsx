@@ -5,6 +5,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class User extends Component {
+  /**
+   * @param {{userData: object, cb: function}} props
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -15,6 +18,7 @@ class User extends Component {
 
   static propTypes = {
     userData: PropTypes.object.isRequired,
+    cb: PropTypes.func.isRequired,
   };
 
   likeUser = () => {
@@ -23,13 +27,14 @@ class User extends Component {
   };
 
   render() {
-    const { userData: {firstName, lastName} } = this.props;
+    const { userData: {firstName, lastName, id}, cb: deleteUser } = this.props;
     return (
       <>
         <p>First name: {firstName || 'No Data'}</p>
         <p>Last name: {lastName || 'No Data'}</p>
         <p>Likes: {this.state.likes}</p>
         <button onClick={this.likeUser}>Like me!</button>
+        <button onClick={() => (deleteUser(id))}>Delete me!</button>
       </>
     );
   }

@@ -5,6 +5,9 @@ import React, { Component } from 'react';
 import User from '../User';
 
 class UserList extends Component {
+  /**
+   * @param {void} props
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -18,18 +21,20 @@ class UserList extends Component {
     };
   }
 
+  deleteUser = (/** @type {number} */ userId) => {
+    const newUsers = this.state.users.filter((user) => userId !== user.id);
+
+    this.setState({ users: newUsers });
+  };
+
   render() {
     const users = this.state.users.map((user) => (
       <li key={user.id}>
-        <User userData={user} />
+        <User userData={user} cb={this.deleteUser} />
       </li>
     ));
 
-    return (
-      <ul>
-        {users}
-      </ul>
-    );
+    return <ul>{users}</ul>;
   }
 }
 
