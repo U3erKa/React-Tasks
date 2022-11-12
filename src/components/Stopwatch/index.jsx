@@ -47,8 +47,6 @@ class Stopwatch extends Component {
     return (
       <article className={container}>
         <p className={time}>Time: {seconds}</p>
-        <p>Laps:</p>
-        <ul>{laps}</ul>
         <button
           className={`${isStarted ? pauseBtn : startBtn} ${btn}`}
           onClick={isStarted ? this.pauseTimer : this.startTimer}
@@ -61,6 +59,8 @@ class Stopwatch extends Component {
         <button className={`${stopBtn} ${btn}`} onClick={this.stopTimer}>
           Stop
         </button>
+        <p>Laps:</p>
+        <ul>{laps}</ul>
       </article>
     );
   }
