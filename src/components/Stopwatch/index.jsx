@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styles from './Stopwatch.module.css';
 
 class Stopwatch extends Component {
@@ -7,19 +8,20 @@ class Stopwatch extends Component {
     this.state = {
       seconds: 0,
       isStarted: false,
+      isTimeVisible: false,
       laps: [],
     };
   }
 
   startTimer = () => {
-    this.setState({ isStarted: true });
+    this.setState({ isStarted: true, isTimeVisible: true });
     this.intervalId = setInterval(() => {
       this.setState({ seconds: this.state.seconds + 1 });
     }, 1000);
   };
   pauseTimer = () => {
-    clearInterval(this.intervalId);
     this.setState({ isStarted: false });
+    clearInterval(this.intervalId);
   };
   addLap = () => {
     const { laps, seconds } = this.state;
@@ -27,6 +29,7 @@ class Stopwatch extends Component {
   };
   stopTimer = () => {
     this.pauseTimer();
+    this.setState({ isTimeVisible: false });
     this.setState({ seconds: 0, laps: [] });
   };
 
@@ -40,13 +43,14 @@ class Stopwatch extends Component {
     });
 
   render() {
-    const { seconds, isStarted } = this.state;
-    const { container, time, btn, startBtn, pauseBtn, lapBtn, stopBtn } = styles;
+    const { isStarted, isTimeVisible, seconds } = this.state;
+    const { container, btn, startBtn, pauseBtn, lapBtn, stopBtn } = styles;
     const laps = this.lapsList();
 
     return (
       <article className={container}>
-        <p className={time}>Time: {seconds}</p>
+        {/* <h1>Stopwatch</h1> */}
+        {isTimeVisible && <StopwatchDisplay seconds={seconds} />}
         <button
           className={`${isStarted ? pauseBtn : startBtn} ${btn}`}
           onClick={isStarted ? this.pauseTimer : this.startTimer}
@@ -63,6 +67,22 @@ class Stopwatch extends Component {
         <ul>{laps}</ul>
       </article>
     );
+  }
+}
+
+class StopwatchDisplay extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  static propTypes = {
+    seconds: PropTypes.number.isRequired,
+  };
+
+  render() {
+    const { seconds } = this.props;
+    const { time } = styles;
+    return <p className={time}>Time: {seconds}</p>;
   }
 }
 
