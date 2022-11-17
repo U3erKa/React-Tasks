@@ -45,7 +45,9 @@ class Stopwatch extends Component {
     this.state.laps.map(({ hours, minutes, seconds }, id) => {
       return (
         <li key={id} className={styles.lap}>
-          {id}: {`${hours}:${minutes}:${seconds}`}
+          <p>
+            {id}: {`${hours}:${minutes}:${seconds}`}
+          </p>
         </li>
       );
     });
@@ -53,12 +55,12 @@ class Stopwatch extends Component {
   render() {
     const { isStarted, isTimeVisible, hours, minutes, seconds } = this.state;
     const displayProps = { hours, minutes, seconds, isStarted, incrementTime: this.incrementTime };
-    const { container, btn, startBtn, pauseBtn, lapBtn, stopBtn } = styles;
+    const { container, heading, btn, startBtn, pauseBtn, lapBtn, stopBtn, laps } = styles;
     const listOfLaps = this.lapsList();
 
     return (
       <article className={container}>
-        {/* <h1>Stopwatch</h1> */}
+        <h1 className={heading}>Stopwatch</h1>
         {isTimeVisible && <StopwatchDisplay displayProps={displayProps} />}
         <button
           className={`${isStarted ? pauseBtn : startBtn} ${btn}`}
@@ -72,8 +74,12 @@ class Stopwatch extends Component {
         <button className={`${stopBtn} ${btn}`} onClick={this.stopTimer}>
           Stop
         </button>
-        <p>Laps:</p>
-        <ul>{listOfLaps}</ul>
+        {listOfLaps.length !== 0 && (
+          <>
+            <h2 className={laps}>Laps:</h2>
+            <ul>{listOfLaps}</ul>
+          </>
+        )}
       </article>
     );
   }

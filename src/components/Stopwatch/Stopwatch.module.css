@@ -6,16 +6,23 @@
   width: clamp(320px, 100%, 480px);
   gap: 8px 4px;
   margin: 0 auto;
+  padding: 10px 15px;
   border: 3px solid black;
   border-radius: 20px;
   background-color: lightgray;
+}
+
+.heading {
+  font-size: 36px;
+  font-weight: bold;
+  grid-area: 1 / 1 / 1 / 4;
 }
 
 .time {
   padding: 5px 10px;
   font-size: 24px;
   font-weight: bold;
-  grid-area: 1 / 1 / 1 / 4;
+  grid-area: 2 / 1 / 2 / 4;
 }
 
 .btn {
@@ -43,4 +50,9 @@
 .stopBtn {
   border-color: orangered;
   background-color: cyan;
+}
+
+.laps {
+  font-size: 18px;
+  font-weight: 600;
 }
