@@ -23,7 +23,7 @@ class Stopwatch extends Component {
   };
   stopTimer = () => {
     this.setState({ isTimeVisible: false, isStarted: false });
-    this.setState({ seconds: 0, laps: [] });
+    this.setState({ hours: 0, minutes: 0, seconds: 0, laps: [] });
   };
   addLap = () => {
     const { laps, hours, minutes, seconds } = this.state;
