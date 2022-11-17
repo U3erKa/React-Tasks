@@ -15,22 +15,20 @@ class Stopwatch extends Component {
 
   startTimer = () => {
     this.setState({ isStarted: true, isTimeVisible: true });
-    this.intervalId = setInterval(() => {
-      this.setState({ seconds: this.state.seconds + 1 });
-    }, 1000);
   };
   pauseTimer = () => {
     this.setState({ isStarted: false });
-    clearInterval(this.intervalId);
+  };
+  stopTimer = () => {
+    this.setState({ isTimeVisible: false, isStarted: false });
+    this.setState({ seconds: 0, laps: [] });
   };
   addLap = () => {
     const { laps, seconds } = this.state;
     this.setState({ laps: [...laps, seconds] });
   };
-  stopTimer = () => {
-    this.pauseTimer();
-    this.setState({ isTimeVisible: false });
-    this.setState({ seconds: 0, laps: [] });
+  incrementTime = () => {
+    this.setState({ seconds: this.state.seconds + 1 });
   };
 
   lapsList = () =>
@@ -50,7 +48,9 @@ class Stopwatch extends Component {
     return (
       <article className={container}>
         {/* <h1>Stopwatch</h1> */}
-        {isTimeVisible && <StopwatchDisplay seconds={seconds} />}
+        {isTimeVisible && (
+          <StopwatchDisplay seconds={seconds} isStarted={isStarted} incrementTime={this.incrementTime} />
+        )}
         <button
           className={`${isStarted ? pauseBtn : startBtn} ${btn}`}
           onClick={isStarted ? this.pauseTimer : this.startTimer}
@@ -77,6 +77,31 @@ class StopwatchDisplay extends Component {
 
   static propTypes = {
     seconds: PropTypes.number.isRequired,
+    isStarted: PropTypes.bool.isRequired,
+    incrementTime: PropTypes.func.isRequired,
+  };
+
+  componentDidMount() {
+    this.startTimer();
+  }
+  componentDidUpdate(prevProps) {
+    const { isStarted } = this.props;
+    if (prevProps.isStarted !== isStarted) {
+      isStarted ? this.startTimer() : this.stopTimer();
+    }
+
+  }
+  componentWillUnmount() {
+    this.stopTimer();
+  }
+
+  startTimer = () => {
+    this.intervalId = setInterval(() => {
+      this.props.incrementTime();
+    }, 1000);
+  };
+  stopTimer = () => {
+    clearInterval(this.intervalId);
   };
 
   render() {
