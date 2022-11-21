@@ -1,3 +1,6 @@
+// @ts-check
+'use strict';
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styles from './Stopwatch.module.css';
@@ -6,7 +9,7 @@ class Stopwatch extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      seconds: 57,
+      seconds: 59,
       minutes: 59,
       hours: 0,
       isStarted: false,
@@ -41,55 +44,30 @@ class Stopwatch extends Component {
     }
   };
 
-  lapsList = () =>
-    this.state.laps.map(({ hours, minutes, seconds }, id) => {
-      return (
-        <li key={id} className={styles.lap}>
-          <p>
-            {id}: {`${hours}:${minutes}:${seconds}`}
-          </p>
-        </li>
-      );
-    });
-
   render() {
-    const { isStarted, isTimeVisible, hours, minutes, seconds } = this.state;
+    const { isStarted, isTimeVisible, hours, minutes, seconds, laps: lapsList } = this.state;
     const displayProps = { hours, minutes, seconds, isStarted, incrementTime: this.incrementTime };
-    const { container, heading, btn, startBtn, pauseBtn, lapBtn, stopBtn, laps } = styles;
-    const listOfLaps = this.lapsList();
+    const buttonsProps = {
+      isStarted,
+      pauseTimer: this.pauseTimer,
+      startTimer: this.startTimer,
+      addLap: this.addLap,
+      stopTimer: this.stopTimer,
+    };
+    const { container, heading } = styles;
 
     return (
       <article className={container}>
         <h1 className={heading}>Stopwatch</h1>
         {isTimeVisible && <StopwatchDisplay displayProps={displayProps} />}
-        <button
-          className={`${isStarted ? pauseBtn : startBtn} ${btn}`}
-          onClick={isStarted ? this.pauseTimer : this.startTimer}
-        >
-          {isStarted ? 'Pause' : 'Start'}
-        </button>
-        <button className={`${lapBtn} ${btn}`} onClick={this.addLap}>
-          Add lap
-        </button>
-        <button className={`${stopBtn} ${btn}`} onClick={this.stopTimer}>
-          Stop
-        </button>
-        {listOfLaps.length !== 0 && (
-          <>
-            <h2 className={laps}>Laps:</h2>
-            <ul>{listOfLaps}</ul>
-          </>
-        )}
+        <StopwatchButtons buttonsProps={buttonsProps} />
+        {lapsList.length !== 0 && <StopwatchLapsList lapsList={lapsList} />}
       </article>
     );
   }
 }
 
 class StopwatchDisplay extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   static propTypes = {
     displayProps: PropTypes.shape({
       hours: PropTypes.number.isRequired,
@@ -103,6 +81,9 @@ class StopwatchDisplay extends Component {
   componentDidMount() {
     this.startTimer();
   }
+  /**
+   * @param {{ displayProps: { isStarted: boolean; }; }} prevProps
+   */
   componentDidUpdate(prevProps) {
     const { isStarted } = this.props.displayProps;
     if (prevProps.displayProps.isStarted !== isStarted) {
@@ -129,6 +110,66 @@ class StopwatchDisplay extends Component {
       <p className={time}>
         Time: {hours} : {minutes} : {seconds}
       </p>
+    );
+  }
+}
+
+class StopwatchButtons extends Component {
+  static propTypes = {
+    buttonsProps: PropTypes.shape({
+      isStarted: PropTypes.bool.isRequired,
+      startTimer: PropTypes.func.isRequired,
+      pauseTimer: PropTypes.func.isRequired,
+      stopTimer: PropTypes.func.isRequired,
+      addLap: PropTypes.func.isRequired,
+    }),
+  };
+
+  render() {
+    const { isStarted, pauseTimer, startTimer, addLap, stopTimer } = this.props.buttonsProps;
+    const { btn, startBtn, pauseBtn, lapBtn, stopBtn } = styles;
+
+    return (
+      <>
+        <button className={`${isStarted ? pauseBtn : startBtn} ${btn}`} onClick={isStarted ? pauseTimer : startTimer}>
+          {isStarted ? 'Pause' : 'Start'}
+        </button>
+        <button className={`${lapBtn} ${btn}`} onClick={addLap}>
+          Add lap
+        </button>
+        <button className={`${stopBtn} ${btn}`} onClick={stopTimer}>
+          Stop
+        </button>
+      </>
+    );
+  }
+}
+
+class StopwatchLapsList extends Component {
+  static propTypes = {
+    lapsList: PropTypes.array.isRequired,
+  };
+
+  lapsList = () =>
+    this.props.lapsList.map(({ hours, minutes, seconds }, /** @type {number} */ id) => {
+      return (
+        <li key={id} className={styles.lap}>
+          <p>
+            {id}: {`${hours}:${minutes}:${seconds}`}
+          </p>
+        </li>
+      );
+    });
+
+  render() {
+    const listOfLaps = this.lapsList();
+    const { laps } = styles;
+
+    return (
+      <>
+        <h2 className={laps}>Laps:</h2>
+        <ul>{listOfLaps}</ul>
+      </>
     );
   }
 }
