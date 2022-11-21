@@ -11,8 +11,8 @@ class Stopwatch extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      seconds: 59,
-      minutes: 59,
+      seconds: 0,
+      minutes: 0,
       hours: 0,
       isStarted: false,
       isTimeVisible: false,
