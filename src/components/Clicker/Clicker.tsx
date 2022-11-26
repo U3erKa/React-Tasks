@@ -17,7 +17,9 @@ export default function Clicker() {
     const {
       target: { value },
     } = e;
-    setDelta(+value);
+    if (!isNaN(+value) && +value !== Infinity) {
+      setDelta(+value);
+    }
   };
   const handleAutoclickerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
