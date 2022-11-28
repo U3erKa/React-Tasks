@@ -6,9 +6,25 @@ export default function Clicker() {
   const [isIncrement, setIsIncrement] = useState(true);
   const [clickInterval, setClickInterval] = useState(1000);
   const [isAuto, setIsAuto] = useState(false);
+  
+    useEffect(() => {
+      handleAutoclicker();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+    useEffect(() => {
+      let timerId: string | number | NodeJS.Timeout | undefined;
+      if (isAuto) {
+        timerId = setTimeout(() => {
+          handleClicker();
+        }, clickInterval);
+      }
+      return () => {
+        clearInterval(timerId);
+      };
+    });
 
-  const handleClicker = (delta: number, isIncrement: boolean) => {
-    setCount(isIncrement ? () => count + delta : () => count - delta);
+  const handleClicker = () => {
+    setCount(isIncrement ? count + delta : count - delta);
   };
   const handleAutoclicker = () => {
     setIsAuto(() => !isAuto);
@@ -17,8 +33,9 @@ export default function Clicker() {
     const {
       target: { value },
     } = e;
-    if (!isNaN(+value) && +value !== Infinity) {
-      setDelta(+value);
+    const number = +value;
+    if (!isNaN(number) && number !== Infinity) {
+      setDelta(number);
     }
   };
   const handleAutoclickerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,31 +45,15 @@ export default function Clicker() {
     setClickInterval(+value);
   };
 
-  useEffect(() => {
-    handleAutoclicker();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  useEffect(() => {
-    let timerId: string | number | NodeJS.Timeout | undefined;
-    if (isAuto) {
-      timerId = setTimeout(() => {
-        handleClicker(delta, isIncrement);
-      }, clickInterval);
-    }
-    return () => {
-      clearInterval(timerId);
-    };
-  });
-
   return (
     <div>
-      <button onClick={() => handleClicker(delta, isIncrement)}>Clicks: {count}</button>
-      <input type="input" value={delta} onChange={handleChange} />
+      <button onClick={handleClicker}>Clicks: {count}</button>
+      <input type="number" value={delta} onChange={handleChange} />
       <button onClick={() => setIsIncrement(() => !isIncrement)}>
         Mode: {isIncrement ? 'Increment' : 'Decrement'}
       </button>
       <button onClick={handleAutoclicker}>Autoclicker: {isAuto ? 'ON' : 'OFF'}</button>
-      <input type="input" value={clickInterval} onChange={handleAutoclickerChange} />
+      <input type="number" value={clickInterval} onChange={handleAutoclickerChange} />
       <p>
         Click effect: {isIncrement ? '+' : '-'}
         {delta} point(s)
