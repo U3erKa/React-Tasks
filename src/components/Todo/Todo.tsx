@@ -2,37 +2,54 @@ import { ChangeEvent, FormEvent, useReducer } from 'react';
 
 interface TodoState {
   todo: string;
-  todos: string[];
-  done: string[];
+  todos: { text: string; isDone: boolean }[];
 }
 
 interface TodoAction {
   type: ACTIONS;
-  payload?: string;
+  payload?: any;
 }
 
 enum ACTIONS {
   UPDATE_TEXT_FIELD = 'UPDATE_TEXT_FIELD',
   ADD_TODO = 'ADD_TODO',
   MARK_DONE = 'MARK_DONE',
+  DELETE = 'DELETE',
+  RESET = 'RESET',
 }
 
 const initialState: TodoState = {
   todos: [],
   todo: '',
-  done: [],
 };
 
-function reducer(state: TodoState, action: TodoAction): TodoState {
-  switch (action.type) {
+function reducer(state: TodoState, { type, payload }: TodoAction): TodoState {
+  switch (type) {
     case ACTIONS.UPDATE_TEXT_FIELD: {
-      return { ...state, todo: action.payload as string };
+      return { ...state, todo: payload as string };
     }
     case ACTIONS.ADD_TODO: {
-      return { ...state, todos: [...state.todos, state.todo] };
+      if (state.todo) {
+        return { ...state, todos: [...state.todos, { text: state.todo, isDone: false }], todo: '' };
+      }
+      return state;
     }
     case ACTIONS.MARK_DONE: {
-      return { ...state };
+      const currentTodo = state.todos[payload as number];
+      const updatedTodo = [
+        ...state.todos,
+        (state.todos[payload as number] = { ...currentTodo, isDone: !currentTodo.isDone }),
+      ];
+
+      updatedTodo.pop();
+      return { ...state, todos: updatedTodo };
+    }
+    case ACTIONS.DELETE: {
+      const updatedTodo = [...state.todos.slice(0, payload as number), ...state.todos.slice((payload + 1) as number)];
+      return { ...state, todos: updatedTodo };
+    }
+    case ACTIONS.RESET: {
+      return initialState;
     }
     default: {
       return state;
@@ -46,8 +63,14 @@ function actText(value: string) {
 function actTodo() {
   return { type: ACTIONS.ADD_TODO };
 }
-function actMarkDone() {
-  return { type: ACTIONS.MARK_DONE };
+function actMarkDone(i: number) {
+  return { type: ACTIONS.MARK_DONE, payload: i };
+}
+function actDelete(i: number) {
+  return { type: ACTIONS.DELETE, payload: i };
+}
+function actReset() {
+  return { type: ACTIONS.RESET };
 }
 
 export default function Todo() {
@@ -55,13 +78,16 @@ export default function Todo() {
 
   const handleTodoChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => dispatch(actText(value));
   const handleAddForm = (e: FormEvent<HTMLButtonElement>) => dispatch(actTodo());
-  const handleMarkDone = (e: FormEvent<HTMLButtonElement>) => dispatch(actMarkDone());
+  const handleMarkDone = (i: number) => dispatch(actMarkDone(i));
+  const handleDelete = (i: number) => dispatch(actDelete(i));
+  const handleReset = (e: FormEvent<HTMLButtonElement>) => dispatch(actReset());
 
   const mapTodos = () =>
-    state.todos.map((todoItem, i) => (
+    state.todos.map(({ text, isDone }, i) => (
       <li key={i}>
-        <p>{todoItem}</p>
-        <button onClick={handleMarkDone}>Mark done</button>
+        <p>{text}</p>
+        <button onClick={() => handleMarkDone(i)}>Mark as {isDone && 'un'}done</button>
+        <button onClick={() => handleDelete(i)}>Delete</button>
       </li>
     ));
 
@@ -69,6 +95,7 @@ export default function Todo() {
     <div>
       <input name="todo" value={state.todo} onChange={handleTodoChange} />
       <button onClick={handleAddForm}>Add</button>
+      <button onClick={handleReset}>Reset</button>
       <ul>{mapTodos()}</ul>
     </div>
   );
