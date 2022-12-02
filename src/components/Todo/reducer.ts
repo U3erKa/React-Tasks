@@ -1,9 +1,9 @@
-interface TodoState {
+interface State {
   todo: string;
   todos: { text: string; isDone: boolean }[];
 }
 
-interface TodoAction {
+interface Action {
   type: ACTIONS;
   payload?: any;
 }
@@ -16,12 +16,12 @@ enum ACTIONS {
   RESET = 'RESET',
 }
 
-export const initialState: TodoState = {
+export const initialState: State = {
   todos: [],
   todo: '',
 };
 
-export function reducer(state: TodoState, { type, payload }: TodoAction): TodoState {
+export function reducer(state: State, { type, payload }: Action): State {
   switch (type) {
     case ACTIONS.UPDATE_TEXT_FIELD: {
       return { ...state, todo: payload as string };
@@ -55,19 +55,19 @@ export function reducer(state: TodoState, { type, payload }: TodoAction): TodoSt
   }
 }
 
-function actText(value: string) {
+function actText(value: string): Action {
   return { type: ACTIONS.UPDATE_TEXT_FIELD, payload: value };
 }
-function actTodo() {
+function actTodo(): Action {
   return { type: ACTIONS.ADD_TODO };
 }
-function actMarkDone(i: number) {
+function actMarkDone(i: number): Action {
   return { type: ACTIONS.MARK_DONE, payload: i };
 }
-function actDelete(i: number) {
+function actDelete(i: number): Action {
   return { type: ACTIONS.DELETE, payload: i };
 }
-function actReset() {
+function actReset(): Action {
   return { type: ACTIONS.RESET };
 }
 
