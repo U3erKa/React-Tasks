@@ -16,19 +16,25 @@ enum ACTIONS {
   RESET = 'RESET',
 }
 
-export const initialState: State = {
+const resetState = {
   todos: [],
   todo: '',
 };
 
+export const initialState: State = JSON.parse(localStorage.getItem('todos') as string) || resetState;
+
 export function reducer(state: State, { type, payload }: Action): State {
   switch (type) {
     case ACTIONS.UPDATE_TEXT_FIELD: {
-      return { ...state, todo: payload as string };
+      const newState = { ...state, todo: payload as string };
+      localStorage.setItem('todos', JSON.stringify(newState));
+      return newState;
     }
     case ACTIONS.ADD_TODO: {
-      if (state.todo) {
-        return { ...state, todos: [...state.todos, { text: state.todo, isDone: false }], todo: '' };
+      if (state.todo.trim()) {
+        const newState = { ...state, todos: [...state.todos, { text: state.todo, isDone: false }], todo: '' };
+        localStorage.setItem('todos', JSON.stringify(newState));
+        return newState;
       }
       return state;
     }
@@ -40,14 +46,19 @@ export function reducer(state: State, { type, payload }: Action): State {
       ];
 
       updatedTodo.pop();
-      return { ...state, todos: updatedTodo };
+      const newState = { ...state, todos: updatedTodo };
+      localStorage.setItem('todos', JSON.stringify(newState));
+      return newState;
     }
     case ACTIONS.DELETE: {
       const updatedTodo = [...state.todos.slice(0, payload as number), ...state.todos.slice((payload + 1) as number)];
-      return { ...state, todos: updatedTodo };
+      const newState = { ...state, todos: updatedTodo };
+      localStorage.setItem('todos', JSON.stringify(newState));
+      return newState;
     }
     case ACTIONS.RESET: {
-      return initialState;
+      localStorage.removeItem('todos');
+      return resetState;
     }
     default: {
       return state;
