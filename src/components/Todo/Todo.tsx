@@ -1,27 +1,34 @@
 import { ChangeEvent, FormEvent, useCallback, useReducer } from 'react';
 import action, { reducer, initialState } from './reducer';
 import styles from './Todo.module.scss';
-import checkOutline from './check-outline.svg';
 import checkBold from './check-bold.svg';
+import checkOutline from './check-outline.svg';
 import deleteOutline from './delete-outline.svg';
 
 export default function Todo() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const mapTodos = useCallback(() =>
-    state.todos.map(({ text, isDone }, i) => (
-      <li className={styles.todoListItem} key={i}>
-        <p className={styles.todoListItemText}>{text}</p>
-        <button className={styles.todoListBtn} onClick={() => dispatch(action.actMarkDone(i))}>
-          <img className={styles.todoListBtnIcon} src={isDone ? `${checkBold}` : `${checkOutline}`} alt={`Mark as ${isDone ? '' : 'un'}done`} />
-        </button>
-        <button className={styles.todoListBtn} onClick={() => dispatch(action.actDelete(i))}>
-          <img className={styles.todoListBtnIcon} src={deleteOutline} alt={'Delete'} />
-        </button>
-      </li>
-    )), [state.todos]);
+  const mapTodos = useCallback(
+    () =>
+      state.todos.map(({ text, isDone }, i) => (
+        <li className={styles.todoListItem} key={i}>
+          <p className={styles.todoListItemText}>{text}</p>
+          <button type="button" className={styles.todoListBtn} onClick={() => dispatch(action.actMarkDone(i))}>
+            <img
+              className={styles.todoListBtnIcon}
+              src={isDone ? `${checkBold}` : `${checkOutline}`}
+              alt={`Mark as ${isDone ? '' : 'un'}done`}
+            />
+          </button>
+          <button type="button" className={styles.todoListBtn} onClick={() => dispatch(action.actDelete(i))}>
+            <img className={styles.todoListBtnIcon} src={deleteOutline} alt={'Delete'} />
+          </button>
+        </li>
+      )),
+    [state.todos]
+  );
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(state);
   };
