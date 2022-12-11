@@ -1,7 +1,9 @@
-interface State {
+export interface State {
   todo: string;
-  todos: { text: string; isDone: boolean }[];
+  todos: Todo[];
 }
+
+type Todo = { text: string; isDone: boolean; id: number };
 
 interface Action {
   type: ACTIONS;
@@ -32,26 +34,28 @@ export function reducer(state: State, { type, payload }: Action): State {
     }
     case ACTIONS.ADD_TODO: {
       if (state.todo.trim()) {
-        const newState = { ...state, todos: [...state.todos, { text: state.todo, isDone: false }], todo: '' };
+        const newState = {
+          ...state,
+          todos: [...state.todos, { text: state.todo, isDone: false, id: Date.now() }],
+          todo: '',
+        };
         localStorage.setItem('todos', JSON.stringify(newState));
         return newState;
       }
       return state;
     }
     case ACTIONS.MARK_DONE: {
-      const currentTodo = state.todos[payload as number];
-      const updatedTodo = [
-        ...state.todos,
-        (state.todos[payload as number] = { ...currentTodo, isDone: !currentTodo.isDone }),
-      ];
+      const newTodos = state.todos.map((todo) => ({
+        ...todo,
+        isDone: todo.id === payload ? !todo.isDone : todo.isDone,
+      }));
+      const newState = { ...state, todos: newTodos };
 
-      updatedTodo.pop();
-      const newState = { ...state, todos: updatedTodo };
       localStorage.setItem('todos', JSON.stringify(newState));
       return newState;
     }
     case ACTIONS.DELETE: {
-      const updatedTodo = [...state.todos.slice(0, payload as number), ...state.todos.slice((payload + 1) as number)];
+      const updatedTodo = state.todos.filter(todo => todo.id !== payload);
       const newState = { ...state, todos: updatedTodo };
       localStorage.setItem('todos', JSON.stringify(newState));
       return newState;

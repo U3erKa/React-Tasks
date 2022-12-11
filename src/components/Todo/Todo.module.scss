@@ -6,6 +6,7 @@ $colorDarkBlue: #1d1ba3;
 $borderRadius: 5px;
 $smallPadding: 10px;
 $bigPadding: 50px;
+$btnWidth: 64px;
 
 .container {
   background: $colorBlue;
@@ -16,13 +17,17 @@ $bigPadding: 50px;
 .todoList {
   width: clamp(320px, 50%, 512px);
   margin: 0 auto;
+  padding: calc($bigPadding / 2) 0;
+  @media (width > 512px) {
+    padding: calc($bigPadding / 2) $bigPadding;
+  }
 }
 
 .fieldset,
 .todoListItem {
   display: grid;
-  grid-template-columns: minmax(200px, 70%) 1fr 1fr;
   gap: $smallPadding;
+  grid-template-columns: 1fr $btnWidth $btnWidth;
 }
 
 .fieldset {
@@ -33,7 +38,6 @@ $bigPadding: 50px;
 
 .form {
   gap: 0 $smallPadding;
-  padding: calc($bigPadding / 2) $bigPadding;
   border-radius: calc($borderRadius * 2);
   background: $colorWhite;
 }
@@ -54,9 +58,12 @@ $bigPadding: 50px;
     font-weight: bold;
   }
   &List {
-    padding-inline-start: 0;
-    width: 100%;
-    margin-top: $bigPadding;
+    margin-top: $smallPadding;
+    background: $colorWhite;
+    border-radius: calc($borderRadius * 2);
+    @media (width < 512px) {
+      padding-inline-start: 0;
+    }
 
     &Btn {
       background: $colorDarkBlue;
@@ -69,7 +76,7 @@ $bigPadding: 50px;
     }
 
     &Item {
-      margin: 5px 0;
+      margin: calc($smallPadding / 2) 0;
       padding: calc($smallPadding / 2) $smallPadding;
       background: $colorCyan;
       border: 1px solid $colorGray;
