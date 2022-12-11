@@ -1,22 +1,5 @@
-export interface State {
-  todo: string;
-  todos: Todo[];
-}
-
-type Todo = { text: string; isDone: boolean; id: number };
-
-interface Action {
-  type: ACTIONS;
-  payload?: any;
-}
-
-enum ACTIONS {
-  UPDATE_TEXT_FIELD = 'UPDATE_TEXT_FIELD',
-  ADD_TODO = 'ADD_TODO',
-  MARK_DONE = 'MARK_DONE',
-  DELETE = 'DELETE',
-  RESET = 'RESET',
-}
+import { Action, State } from "components/Todo/types";
+import { ACTIONS } from "./constants";
 
 const resetState = {
   todos: [],
@@ -28,7 +11,7 @@ export const initialState: State = JSON.parse(localStorage.getItem('todos') as s
 export function reducer(state: State, { type, payload }: Action): State {
   switch (type) {
     case ACTIONS.UPDATE_TEXT_FIELD: {
-      const newState = { ...state, todo: payload as string };
+      const newState = { ...state, todo: payload };
       localStorage.setItem('todos', JSON.stringify(newState));
       return newState;
     }

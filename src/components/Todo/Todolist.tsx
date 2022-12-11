@@ -1,11 +1,12 @@
 import { useCallback } from 'react';
-import action, { State } from './reducer';
+import action from 'app/reducer';
+import { Action, State } from './types';
 import styles from './Todo.module.scss';
 import checkBold from './img/check-bold.svg';
 import checkOutline from './img/check-outline.svg';
 import deleteOutline from './img/delete-outline.svg';
 
-export default function Todolist({ state, dispatch }: { state: State; dispatch: any }) {
+export default function Todolist({ state, dispatch }: { state: State; dispatch: (arg0: Action) => void }) {
   const mapTodos = useCallback(
     () =>
       state.todos.map(({ text, isDone, id }) => (

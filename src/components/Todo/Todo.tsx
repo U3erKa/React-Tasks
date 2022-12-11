@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useReducer } from 'react';
-import action, { reducer, initialState } from './reducer';
+import action, { reducer, initialState } from 'app/reducer';
 import Todolist from './Todolist';
 import styles from './Todo.module.scss';
 
