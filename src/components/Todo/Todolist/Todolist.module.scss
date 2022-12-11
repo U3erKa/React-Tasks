@@ -1,0 +1,40 @@
+@import 'app/variables';
+@import 'app/templates';
+
+.todo {
+  &List {
+    @extend %box;
+    margin-top: $smallPadding;
+    @media (width < 512px) {
+      padding-inline-start: 0;
+    }
+
+    &Btn {
+      background: $colorDarkBlue;
+      border-radius: $borderRadius;
+
+      &Icon {
+        width: 24px;
+        padding: $smallPadding;
+      }
+    }
+
+    &Item {
+      @extend %grid;
+      margin: calc($smallPadding / 2) 0;
+      padding: calc($smallPadding / 2) $smallPadding;
+      background: $colorCyan;
+      border: 1px solid $colorGray;
+      border-radius: $borderRadius;
+
+      &::marker {
+        content: '';
+      }
+      &Text {
+        overflow: hidden;
+        text-align: justify;
+        margin: 0;
+      }
+    }
+  }
+}

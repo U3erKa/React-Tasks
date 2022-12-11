@@ -1,0 +1,19 @@
+@import 'app/variables';
+
+%box {
+  width: clamp(320px, 50%, 512px);
+  margin: 0 auto;
+  padding: calc($bigPadding / 2) 0;
+  background: $colorWhite;
+  border-radius: calc($borderRadius * 2);
+
+  @media (width > 512px) {
+    padding: calc($bigPadding / 2) $bigPadding;
+  }
+}
+
+%grid {
+  display: grid;
+  gap: $smallPadding;
+  grid-template-columns: 1fr $btnWidth $btnWidth;
+}
