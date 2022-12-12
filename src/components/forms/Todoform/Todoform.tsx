@@ -1,31 +1,27 @@
-import { ChangeEvent, FormEvent } from 'react';
+import { Field, Form, Formik, FormikHelpers } from 'formik';
 import action from 'app/reducer';
 import styles from './Todoform.module.scss';
 import { Action, State } from 'components/Todo/types';
 
-
 export default function Todoform({ state, dispatch }: { state: State; dispatch: (arg0: Action) => void }) {
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(state);
+  const handleSubmit = (values: any, formikBag: FormikHelpers<State>) => {
+    dispatch(action.actTodo(values.todo));
+    formikBag.resetForm();
   };
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <Formik initialValues={{ todo: '' } as any} onSubmit={handleSubmit}>
+      <Form className={styles.form}>
         <fieldset className={styles.fieldset}>
-          <textarea
-            className={styles.formInput}
-            name="todo"
-            value={state.todo}
-            onChange={({ target: { value } }: ChangeEvent<HTMLTextAreaElement>) => dispatch(action.actText(value))}
-          />
-          <button className={styles.formBtn} onClick={() => dispatch(action.actTodo())}>
+          <Field as="textarea" className={styles.formInput} name="todo" />
+          <button type="submit" className={styles.formBtn}>
             Add
           </button>
-          <button className={styles.formBtn} onClick={() => dispatch(action.actReset())}>
+          <button type="button" className={styles.formBtn} onClick={() => dispatch(action.actReset())}>
             Reset
           </button>
         </fieldset>
-      </form>
-  )
+      </Form>
+    </Formik>
+  );
 }

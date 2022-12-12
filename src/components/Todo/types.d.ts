@@ -6,7 +6,6 @@ export interface Action {
 }
 
 export interface State {
-  todo: string;
   todos: Todo[];
 }
 

@@ -1,9 +1,8 @@
-import { Action, State } from "components/Todo/types";
-import { ACTIONS } from "./constants";
+import { Action, State } from 'components/Todo/types';
+import { ACTIONS } from './constants';
 
 const resetState = {
   todos: [],
-  todo: '',
 };
 
 export const initialState: State = JSON.parse(localStorage.getItem('todos') as string) || resetState;
@@ -16,11 +15,10 @@ export function reducer(state: State, { type, payload }: Action): State {
       return newState;
     }
     case ACTIONS.ADD_TODO: {
-      if (state.todo.trim()) {
+      if (payload.trim()) {
         const newState = {
           ...state,
-          todos: [...state.todos, { text: state.todo, isDone: false, id: Date.now() }],
-          todo: '',
+          todos: [...state.todos, { text: payload, isDone: false, id: Date.now() }],
         };
         localStorage.setItem('todos', JSON.stringify(newState));
         return newState;
@@ -38,7 +36,7 @@ export function reducer(state: State, { type, payload }: Action): State {
       return newState;
     }
     case ACTIONS.DELETE: {
-      const updatedTodo = state.todos.filter(todo => todo.id !== payload);
+      const updatedTodo = state.todos.filter((todo) => todo.id !== payload);
       const newState = { ...state, todos: updatedTodo };
       localStorage.setItem('todos', JSON.stringify(newState));
       return newState;
@@ -56,8 +54,8 @@ export function reducer(state: State, { type, payload }: Action): State {
 function actText(value: string): Action {
   return { type: ACTIONS.UPDATE_TEXT_FIELD, payload: value };
 }
-function actTodo(): Action {
-  return { type: ACTIONS.ADD_TODO };
+function actTodo(value: string): Action {
+  return { type: ACTIONS.ADD_TODO, payload: value };
 }
 function actMarkDone(i: number): Action {
   return { type: ACTIONS.MARK_DONE, payload: i };
