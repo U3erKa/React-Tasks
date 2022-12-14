@@ -1,7 +1,3 @@
-export enum ACTIONS {
-  UPDATE_TEXT_FIELD = 'UPDATE_TEXT_FIELD',
-  ADD_TODO = 'ADD_TODO',
-  MARK_DONE = 'MARK_DONE',
-  DELETE = 'DELETE',
-  RESET = 'RESET',
+export enum SLICE {
+  TODOS = 'todos',
 }

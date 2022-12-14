@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
-import { addTodo, resetTodos } from 'app/slices/todoReducer';
+import { addTodo, resetTodos } from 'app/slices/todos';
 import styles from './Todoform.module.scss';
 
 const initialValues = { todo: '' };

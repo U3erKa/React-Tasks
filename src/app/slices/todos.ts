@@ -1,21 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TodoState, Todo } from 'components/Todo/types';
-import { ACTIONS } from 'app/constants';
+import { SLICE } from 'app/constants';
+import { TodoState } from 'components/Todo/types';
 
-const resetState = {
-  todos: [],
-};
+export const initialState: TodoState = { todos: JSON.parse(localStorage.getItem(SLICE.TODOS) as string) ?? [] };
 
-export const initialState: TodoState = { todos: JSON.parse(localStorage.getItem('todos') as string) } || resetState;
+function updateLocalStorage({ todos }: TodoState) {
+  localStorage.setItem(SLICE.TODOS, JSON.stringify(todos));
+}
 
 const todoReducer = createSlice({
-  name: 'todos',
+  name: SLICE.TODOS,
   initialState,
   reducers: {
     addTodo: (state, action: PayloadAction<string>) => {
       if (action.payload.trim()) {
         state.todos.push({ text: action.payload, isDone: false, id: Date.now() });
-        localStorage.setItem('todos', JSON.stringify(state.todos));
+        updateLocalStorage(state);
       }
     },
     markDone: (state, action: PayloadAction<number>) => {
@@ -23,14 +23,14 @@ const todoReducer = createSlice({
         ...todo,
         isDone: todo.id === action.payload ? !todo.isDone : todo.isDone,
       }));
-      localStorage.setItem('todos', JSON.stringify(state.todos));
+      updateLocalStorage(state);
     },
     deleteTodo: (state, action: PayloadAction<number>) => {
       state.todos = state.todos.filter((todo) => todo.id !== action.payload);
-      localStorage.setItem('todos', JSON.stringify(state.todos));
+      updateLocalStorage(state);
     },
     resetTodos: (state) => {
-      localStorage.removeItem('todos');
+      localStorage.removeItem(SLICE.TODOS);
       state.todos = [];
     },
   },

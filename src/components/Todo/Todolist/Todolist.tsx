@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'app/store';
-import { deleteTodo, markDone } from 'app/slices/todoReducer';
+import { deleteTodo, markDone } from 'app/slices/todos';
 import { Todo } from '../types';
 import styles from './Todolist.module.scss';
 import checkBold from '../img/check-bold.svg';
