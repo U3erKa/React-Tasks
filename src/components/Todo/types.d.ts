@@ -5,7 +5,7 @@ export interface Action {
   payload?: any;
 }
 
-export interface State {
+export interface TodoState {
   todos: Todo[];
 }
 
