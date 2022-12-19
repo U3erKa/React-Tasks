@@ -1,28 +1,32 @@
 import { useDispatch } from 'react-redux';
-import { Field, Form, Formik, FormikHelpers } from 'formik';
+import { ErrorMessage, Form, Formik, FormikHelpers, getIn } from 'formik';
 import { addTodo, resetTodos } from 'app/slices/todos';
 import styles from './Todoform.module.scss';
+import { todoSchema } from 'app/schemas/todo';
+import { TodoInputEntry } from 'components/Todo/types';
+import TodoInput from './TodoInput';
 
-const initialValues = { todo: '' };
+const initialValues: TodoInputEntry = { todo: '' };
 
 export default function Todoform() {
   const dispatch = useDispatch();
-  const handleSubmit = (values: typeof initialValues, formikBag: FormikHelpers<typeof initialValues>) => {
+  const handleSubmit = (values: TodoInputEntry, formikBag: FormikHelpers<TodoInputEntry>) => {
     dispatch(addTodo(values.todo));
     formikBag.resetForm();
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+    <Formik initialValues={initialValues} validationSchema={todoSchema} onSubmit={handleSubmit}>
       <Form className={styles.form}>
         <fieldset className={styles.fieldset}>
-          <Field as="textarea" className={styles.formInput} name="todo" />
+          <TodoInput />
           <button type="submit" className={styles.formBtn}>
             Add
           </button>
           <button type="button" className={styles.formBtn} onClick={() => dispatch(resetTodos())}>
             Reset
           </button>
+          <ErrorMessage name="todo" component={'p'} className={styles.formInputErrorText} />
         </fieldset>
       </Form>
     </Formik>
