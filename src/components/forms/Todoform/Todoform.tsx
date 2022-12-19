@@ -1,10 +1,10 @@
 import { useDispatch } from 'react-redux';
-import { ErrorMessage, Form, Formik, FormikHelpers, getIn } from 'formik';
+import { ErrorMessage, Form, Formik, FormikHelpers } from 'formik';
 import { addTodo, resetTodos } from 'app/slices/todos';
-import styles from './Todoform.module.scss';
 import { todoSchema } from 'app/schemas/todo';
 import { TodoInputEntry } from 'components/Todo/types';
 import TodoInput from './TodoInput';
+import styles from './Todoform.module.scss';
 
 const initialValues: TodoInputEntry = { todo: '' };
 

@@ -1,6 +1,6 @@
 import { Field, useFormikContext } from 'formik';
-import styles from './Todoform.module.scss';
 import { TodoInputEntry } from 'components/Todo/types';
+import styles from './Todoform.module.scss';
 
 export default function TodoInput() {
   const { errors } = useFormikContext<TodoInputEntry>();
