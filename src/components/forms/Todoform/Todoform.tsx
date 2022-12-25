@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
+import { AnyAction } from '@reduxjs/toolkit';
 import { ErrorMessage, Form, Formik, FormikHelpers } from 'formik';
-import { addTodo, resetTodos } from 'app/slices/todos';
+import { addTodo } from 'app/slices/todoReducer';
 import { todoSchema } from 'app/schemas/todo';
 import { TodoInputEntry } from 'components/Todo/types';
 import TodoInput from './TodoInput';
@@ -11,7 +12,7 @@ const initialValues: TodoInputEntry = { todo: '' };
 export default function Todoform() {
   const dispatch = useDispatch();
   const handleSubmit = (values: TodoInputEntry, formikBag: FormikHelpers<TodoInputEntry>) => {
-    dispatch(addTodo(values.todo));
+    dispatch(addTodo(values.todo) as unknown as AnyAction);
     formikBag.resetForm();
   };
 
@@ -23,7 +24,8 @@ export default function Todoform() {
           <button type="submit" className={styles.formBtn}>
             Add
           </button>
-          <button type="button" className={styles.formBtn} onClick={() => dispatch(resetTodos())}>
+          {/* <button type="button" className={styles.formBtn} onClick={() => dispatch(resetTodos())}> */}
+          <button type="button" className={styles.formBtn} onClick={() => console.warn('Feature not implemented')}>
             Reset
           </button>
           <ErrorMessage name="todo" component={'p'} className={styles.formInputErrorText} />

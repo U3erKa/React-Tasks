@@ -9,6 +9,8 @@ export interface Action {
 
 export interface TodoState {
   todos: Todo[];
+  isLoading: boolean;
+  error: any;
 }
 
 export type TodoInputEntry = yup.InferType<typeof todoSchema>;
