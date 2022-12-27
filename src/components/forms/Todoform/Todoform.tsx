@@ -12,6 +12,7 @@ const initialValues: TodoInputEntry = { todo: '' };
 export default function Todoform() {
   const dispatch = useDispatch();
   const handleSubmit = (values: TodoInputEntry, formikBag: FormikHelpers<TodoInputEntry>) => {
+    // @ts-expect-error
     dispatch(addTodo(values.todo) as unknown as AnyAction);
     formikBag.resetForm();
   };

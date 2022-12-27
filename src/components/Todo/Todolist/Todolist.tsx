@@ -20,13 +20,13 @@ export default function Todolist() {
 
   const mapTodos = useCallback(
     () =>
-      todos.map(({ text, isDone, id }) => (
+      todos.map(({ text, isDone, id }: Todo) => (
         <li className={styles.todoListItem} key={id}>
           <p className={styles.todoListItemText}>{text}</p>
           <button
             type="button"
             className={styles.todoListBtn}
-            // onClick={() => dispatch(markDone(id) as unknown as AnyAction)}
+            // onClick={() => dispatch(markDone(id, { text, isDone: !isDone }) as unknown as AnyAction)}
             onClick={() => console.warn('Feature not implemented')}
           >
             <img
@@ -38,8 +38,8 @@ export default function Todolist() {
           <button
             type="button"
             className={styles.todoListBtn}
-            // onClick={() => dispatch(deleteTodo(id) as unknown as AnyAction)}
-            onClick={() => console.warn('Feature not implemented')}
+            // @ts-expect-error
+            onClick={() => dispatch(deleteTodo(id) as unknown as AnyAction)}
           >
             <img className={styles.todoListBtnIcon} src={deleteOutline} alt={'Delete'} />
           </button>

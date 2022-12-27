@@ -20,12 +20,12 @@ export const getTodosReducer = createExtraReducers({
   pendingReducer: (state: TodoState) => {
     state.isLoading = true;
   },
-  fulfilledReducer: (state: TodoState, { payload }: { payload: any; }) => {
+  fulfilledReducer: (state: TodoState, { payload }: { payload: any }) => {
     state.isLoading = false;
     state.todos = payload;
     state.error = null;
   },
-  rejectedReducer: (state: TodoState, { payload }: { payload: any; }) => {
+  rejectedReducer: (state: TodoState, { payload }: { payload: any }) => {
     state.isLoading = false;
     state.error = payload;
   },
@@ -36,12 +36,12 @@ export const addTodoReducer = createExtraReducers({
   pendingReducer: (state: TodoState) => {
     state.isLoading = true;
   },
-  fulfilledReducer: (state: TodoState, { payload }: { payload: any; }) => {
+  fulfilledReducer: (state: TodoState, { payload }: { payload: any }) => {
     state.isLoading = false;
     state.todos.push({ ...payload });
     state.error = null;
   },
-  rejectedReducer: (state: TodoState, { payload }: { payload: any; }) => {
+  rejectedReducer: (state: TodoState, { payload }: { payload: any }) => {
     state.isLoading = false;
     state.error = payload;
   },
@@ -52,12 +52,12 @@ export const markDoneReducer = createExtraReducers({
   pendingReducer: (state: TodoState) => {
     state.isLoading = true;
   },
-  fulfilledReducer: (state: TodoState, { payload }: { payload: any; }) => {
+  fulfilledReducer: (state: TodoState, { payload }: { payload: any }) => {
     state.isLoading = false;
     // state.todos = { ...payload };
     state.error = null;
   },
-  rejectedReducer: (state: TodoState, { payload }: { payload: any; }) => {
+  rejectedReducer: (state: TodoState, { payload }: { payload: any }) => {
     state.isLoading = false;
     state.error = payload;
   },
@@ -68,12 +68,12 @@ export const deleteTodoReducer = createExtraReducers({
   pendingReducer: (state: TodoState) => {
     state.isLoading = true;
   },
-  fulfilledReducer: (state: TodoState, { payload }: { payload: any; }) => {
+  fulfilledReducer: (state: TodoState, { payload }: { payload: string }) => {
     state.isLoading = false;
-    // state.todos = { ...payload };
+    state.todos = state.todos.filter((todo) => todo.id !== +payload);
     state.error = null;
   },
-  rejectedReducer: (state: TodoState, { payload }: { payload: any; }) => {
+  rejectedReducer: (state: TodoState, { payload }: { payload: any }) => {
     state.isLoading = false;
     state.error = payload;
   },
@@ -84,12 +84,12 @@ export const getTaskByIdReducer = createExtraReducers({
   pendingReducer: (state: TodoState) => {
     state.isLoading = true;
   },
-  fulfilledReducer: (state: TodoState, { payload }: { payload: any; }) => {
+  fulfilledReducer: (state: TodoState, { payload }: { payload: any }) => {
     state.isLoading = false;
     // state.todos = { ...payload };
     state.error = null;
   },
-  rejectedReducer: (state: TodoState, { payload }: { payload: any; }) => {
+  rejectedReducer: (state: TodoState, { payload }: { payload: any }) => {
     state.isLoading = false;
     state.error = payload;
   },
