@@ -20,7 +20,30 @@ export const decorateAsyncThunk = ({ key, thunk }: { key: string; thunk: Functio
 export const createExtraReducers =
   ({ thunk, pendingReducer, fulfilledReducer, rejectedReducer }: any) =>
   (builder: ActionReducerMapBuilder<TodoState>) => {
-    pendingReducer && builder.addCase(thunk.pending, pendingReducer);
-    fulfilledReducer && builder.addCase(thunk.fulfilled, fulfilledReducer);
-    rejectedReducer && builder.addCase(thunk.rejected, rejectedReducer);
+    builder.addCase(
+      thunk.pending,
+      pendingReducer
+        ? pendingReducer
+        : (state: TodoState) => {
+            state.isLoading = true;
+          }
+    );
+    builder.addCase(
+      thunk.fulfilled,
+      fulfilledReducer
+        ? fulfilledReducer
+        : (state: TodoState, { payload }: { payload: string }) => {
+            state.isLoading = false;
+            state.error = null;
+          }
+    );
+    builder.addCase(
+      thunk.rejected,
+      rejectedReducer
+        ? rejectedReducer
+        : (state: TodoState, { payload }: { payload: any }) => {
+            state.isLoading = false;
+            state.error = payload;
+          }
+    );
   };

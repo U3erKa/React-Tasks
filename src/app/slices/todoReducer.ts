@@ -17,81 +17,46 @@ const getTaskById = decorateAsyncThunk({
 
 export const getTodosReducer = createExtraReducers({
   thunk: getTodos,
-  pendingReducer: (state: TodoState) => {
-    state.isLoading = true;
-  },
   fulfilledReducer: (state: TodoState, { payload }: { payload: any }) => {
     state.isLoading = false;
     state.todos = payload;
     state.error = null;
   },
-  rejectedReducer: (state: TodoState, { payload }: { payload: any }) => {
-    state.isLoading = false;
-    state.error = payload;
-  },
 });
 
 export const addTodoReducer = createExtraReducers({
   thunk: addTodo,
-  pendingReducer: (state: TodoState) => {
-    state.isLoading = true;
-  },
   fulfilledReducer: (state: TodoState, { payload }: { payload: any }) => {
     state.isLoading = false;
     state.todos.push({ ...payload });
     state.error = null;
   },
-  rejectedReducer: (state: TodoState, { payload }: { payload: any }) => {
-    state.isLoading = false;
-    state.error = payload;
-  },
 });
 
 export const markDoneReducer = createExtraReducers({
   thunk: markDone,
-  pendingReducer: (state: TodoState) => {
-    state.isLoading = true;
-  },
   fulfilledReducer: (state: TodoState, { payload }: { payload: any }) => {
     state.isLoading = false;
     // state.todos = { ...payload };
     state.error = null;
-  },
-  rejectedReducer: (state: TodoState, { payload }: { payload: any }) => {
-    state.isLoading = false;
-    state.error = payload;
   },
 });
 
 export const deleteTodoReducer = createExtraReducers({
   thunk: deleteTodo,
-  pendingReducer: (state: TodoState) => {
-    state.isLoading = true;
-  },
   fulfilledReducer: (state: TodoState, { payload }: { payload: string }) => {
     state.isLoading = false;
     state.todos = state.todos.filter((todo) => todo.id !== +payload);
     state.error = null;
   },
-  rejectedReducer: (state: TodoState, { payload }: { payload: any }) => {
-    state.isLoading = false;
-    state.error = payload;
-  },
 });
 
 export const getTaskByIdReducer = createExtraReducers({
   thunk: getTaskById,
-  pendingReducer: (state: TodoState) => {
-    state.isLoading = true;
-  },
   fulfilledReducer: (state: TodoState, { payload }: { payload: any }) => {
     state.isLoading = false;
     // state.todos = { ...payload };
     state.error = null;
-  },
-  rejectedReducer: (state: TodoState, { payload }: { payload: any }) => {
-    state.isLoading = false;
-    state.error = payload;
   },
 });
 
