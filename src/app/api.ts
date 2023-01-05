@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { BASE_URL } from './constants';
-import { Todo } from 'components/Todo/types';
+import type { Todo, TodoWithoutId } from 'components/Todo/types';
 
 export async function createTask(text: string) {
   return await axios.post<{ data: Todo }>(`${BASE_URL}`, { text });
@@ -19,5 +19,5 @@ export async function getTasks() {
 }
 
 export async function updateTaskById(id: number, { text, isDone }: { text: string; isDone: boolean }) {
-  return await axios.put<{ data: Todo }>(`${BASE_URL}/${id}`, { text, isDone });
+  return await axios.put<{ data: TodoWithoutId }>(`${BASE_URL}/${id}`, { text, isDone });
 }

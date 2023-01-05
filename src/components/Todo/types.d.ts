@@ -16,3 +16,4 @@ export interface TodoState {
 export type TodoInputEntry = yup.InferType<typeof todoSchema>;
 
 export type Todo = { text: string; isDone: boolean; id: number };
+export type TodoWithoutId = { text: string; isDone: boolean };

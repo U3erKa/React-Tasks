@@ -2,7 +2,7 @@ import { useCallback, useEffect } from 'react';
 import { AnyAction } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'app/store';
-import { addTodo, getTodos, markDone, deleteTodo, getTaskById } from 'app/slices/todoReducer';
+import { getTodos, markDone, deleteTodo } from 'app/slices/todoReducer';
 import { Todo } from '../types';
 import styles from './Todolist.module.scss';
 import checkBold from '../img/check-bold.svg';
@@ -26,8 +26,8 @@ export default function Todolist() {
           <button
             type="button"
             className={styles.todoListBtn}
-            // onClick={() => dispatch(markDone(id, { text, isDone: !isDone }) as unknown as AnyAction)}
-            onClick={() => console.warn('Feature not implemented')}
+            // @ts-expect-error
+            onClick={() => dispatch(markDone({ id, text, isDone }) as unknown as AnyAction)}
           >
             <img
               className={styles.todoListBtnIcon}
