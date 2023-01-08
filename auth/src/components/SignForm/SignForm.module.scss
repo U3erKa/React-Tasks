@@ -1,0 +1,115 @@
+@import 'common/styles/style';
+
+.form {
+  min-height: calc(100vh - (2 * $navListPadding + $logoHeight + 5px));
+}
+
+.fieldset {
+  display: grid;
+  max-width: $form-width;
+  margin: auto;
+  gap: calc(2 * $defaultPadding) calc(3 * $defaultPadding);
+  border: none;
+
+  @media (min-width: 578px) {
+    grid-template-columns: 1fr 1fr;
+    
+    & > :nth-child(n):not(.inputRegister, .labelRegister, .inputLoginCheckbox, .forgotPasswordLink) {
+      grid-column: span 2 / auto;
+    }
+  }
+}
+
+.heading {
+  &Register,
+  &Login {
+    text-align: center;
+    margin: $defaultPadding 0;
+  }
+
+  &Register {
+    font-size: 2rem;
+  }
+  &Login {
+    font-size: 1.5rem;
+  }
+}
+
+.subHeading {
+  text-align: center;
+  margin: 0;
+  margin-bottom: $defaultPadding;
+}
+
+.input {
+  &Register,
+  &Login {
+    padding: calc(2.5 * $defaultPadding);
+    border-radius: $borderRadius;
+    border: none;
+    font-size: 0.8rem;
+
+    &Checkbox {
+      justify-self: left;
+    }
+  }
+}
+
+.label {
+  &Register,
+  &Login {
+    border-radius: $borderRadius;
+    background-color: $color-white;
+
+    & > .input {
+      &Login,
+      &Register {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.passwordBtn {
+  border: 1px solid;
+  border-radius: $borderRadius;
+}
+
+.label {
+  border: 1px solid;
+  padding: $defaultPadding calc(1.5 * $defaultPadding);
+
+  &Register,
+  &Login {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.labelText,
+.inputRegisterCheckbox {
+  font-size: 0.8rem;
+}
+
+.inputLoginCheckbox,
+.forgotPasswordLink {
+  font-size: 0.7rem;
+}
+.forgotPasswordLink {
+  justify-self: right;
+  text-decoration: none;
+}
+.forgotPasswordLink,
+.tosLink {
+  color: $color-white;
+}
+
+.submitBtn {
+  padding: calc(2.5 * $defaultPadding);
+  color: $color-white;
+  background-color: $color-cyan;
+  border: none;
+  border-radius: $borderRadius;
+  font-size: 0.8rem;
+  font-weight: bold;
+}

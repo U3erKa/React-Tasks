@@ -1,0 +1,28 @@
+@import 'common/styles/style';
+
+.navList {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0;
+  padding: $navListPadding;
+
+  &Item {
+    &Link {
+      padding: $defaultPadding calc(1.5 * $defaultPadding);
+      border: 1px solid;
+      border-radius: $borderRadius;
+      color: $color-white;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+  }
+  ::marker {
+    content: none;
+  }
+}
+
+.logo {
+  height: $logoHeight;
+}

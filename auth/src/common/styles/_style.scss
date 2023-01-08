@@ -1,0 +1,16 @@
+$color-white: #fff;
+$color-gray: #4a4e57;
+$color-blue: #3ea9f5;
+$color-cyan: #28d2d0;
+
+$defaultPadding: 10px;
+$navListPadding: 50px;
+$logoHeight: 50px;
+$borderRadius: 5px;
+$form-width: 600px;
+
+.form,
+.header {
+  color: $color-white;
+  background-color: $color-blue;
+}
