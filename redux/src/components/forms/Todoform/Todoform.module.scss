@@ -1,0 +1,43 @@
+@import 'app/variables';
+@import 'app/templates';
+
+.form {
+  @extend %box;
+  gap: 0 $smallPadding;
+
+  &Input {
+    padding: $smallPadding;
+    border: 2px solid $colorBlue;
+    border-radius: $borderRadius;
+    font-family: sans-serif;
+    font-size: 1rem;
+
+    &Error {
+      border-color: $colorRed;
+
+      &Text {
+        grid-column: span 3 / auto;
+        margin: 0;
+        padding-top: $smallPadding;
+        text-align: center;
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: $colorOrange;
+      }
+    }
+  }
+  &Btn {
+    background: $colorBlue;
+    border: none;
+    border-radius: $borderRadius;
+    color: $colorWhite;
+    font-weight: bold;
+  }
+}
+
+.fieldset {
+  @extend %grid;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
