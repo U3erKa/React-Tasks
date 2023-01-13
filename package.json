@@ -1,0 +1,17 @@
+{
+  "name": "react-tasks",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "author": "",
+  "license": "ISC",
+  "workspaces": [
+    "auth",
+    "conditional",
+    "hooks",
+    "lists",
+    "props",
+    "redux",
+    "stopwatch"
+  ]
+}
