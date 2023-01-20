@@ -1,70 +1,27 @@
-# Getting Started with Create React App
+# Practice. Stopwatch
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Задача: реализовать компонент секундомера.
 
-## Available Scripts
+## Basic level
 
-In the project directory, you can run:
+- секунды можно отображать как простое число
+- сделать кнопку запуска секундомера, при нажатии на которую раз в секунду увеличивать число
+- сделать кнопку остановки секундомера, при нажатии на которую он ставится на паузу
+- сделать базовую стилизацию для элементов секундомера
 
-### `npm start`
+## Advanced level
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- сделать кнопку сброса секундомера. При сбросе нужно вернуть состояние в изначальный вид (подумайте что для этого надо сделать)
+- Обьеденить кнопки старта и остановки секундомера в одну кнопку, которая будет менятся в зависимости от состояния секундомера
+- Переделать стили для новой кнопки, чтобы они динамически менялись
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Ultra advanced level
 
-### `npm test`
+- добавить кнопку круга, при нажатии на неё текущее значение секундомера надо записать в отдельный массив кругов (при этом можно либо обнулять текущее время либо оставлять как есть)
+- отдельным списком отобразить все записи в массиве кругов в виде **номер_круга : количество_секунд**
+- Секундомер должен стартовать при монтировании компонента
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Frontend God level
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- разделить компонент Stopwatch на умные  глупые компоненты для умешьшения его размеров. Глупым компонентам передавать данные для отрисовки через пропсы
+- Перейти от записи чисел к записи и отображаению реальных дат. При этом необходимо будет поменять логику добавления секунд и лоигку отрисовки дат, так как реакт не будет отображать обьекты, а будет кидаться ошбками. Отобразить даты в виде **часы : минуты : секунды**

@@ -1,46 +1,43 @@
-# Getting Started with Create React App
+# Reducer tasks
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## React useReducer TodoList
 
-## Available Scripts
+Создать компонент планировщика задач (TodoList) по аналогии со скриншотом.
 
-In the project directory, you can run:
+Состояние планировщика реализовать с помощью useReducer
 
-### `npm start`
+### Advanced Level
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Приделать каждой задаче статус (выполнена / не выполнена). Реализовать возможность изменять статус задачи
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+![Todo](/doc/todo.jpg "todo.jpg")
 
-### `npm test`
+## Redux todoList
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Реализовать ToDoList, используя redux toolkit\
+Нужно иметь возможность:
 
-### `npm run build`
+- создавать задачу
+- помечать её как выполненную
+- удалять её
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Advanced level
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Прикрутить валидацию и с е помощью:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- минимальная валидация перед созданием задачи (пустые строчки не разрешать создавать)
+- \* изменять стили инпута, если элемент не проходит валидацию
 
-### `npm run eject`
+## Redux asyncThunk ToDo
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Используя сервер из прикрепленного репозитория реализовать комопнент ToDo, который имеет следующий функционал:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Отправка текста для новой задачи на сервер и получение с сервера её обьекта
+- Загрузка всех задач при первом рендере
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Advanced level
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- Удаление конкретной задачи в компоненте удаляет её на сервере
+- Обновление конкретной задачи обновляет её на сервере
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+[https://github.com/fc-fullstack-courses/dbless-server](https://github.com/fc-fullstack-courses/dbless-server)
